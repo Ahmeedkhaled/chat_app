@@ -1,5 +1,7 @@
+import 'dart:async';
+
+import 'package:chat_app/constant/auth_navigator.dart';
 import 'package:chat_app/constant/routes_app.dart';
-import 'package:chat_app/view/screen/auth/login/login_navigator.dart';
 import 'package:chat_app/view/screen/auth/login/login_view_model.dart';
 import 'package:chat_app/view/widgets/custom_text_form.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +16,7 @@ class CustomFormFieldLogin extends StatefulWidget {
 }
 
 class _CustomFormFieldState extends State<CustomFormFieldLogin>
-    implements LoginNavigator {
+    implements AuthNavigator {
   String email = '';
 
   String password = '';
@@ -155,7 +157,12 @@ class _CustomFormFieldState extends State<CustomFormFieldLogin>
   @override
   void showMessage(String message) {
     utils.showMessage(context, message, "Ok", (context) {
-      Navigator.of(context).pushReplacementNamed(RoutesApp.homeScreen);
+      Navigator.of(context).pop();
     });
+  }
+
+  @override
+  void navigateToHome() {
+    Navigator.of(context).pushReplacementNamed(RoutesApp.homeScreen);
   }
 }

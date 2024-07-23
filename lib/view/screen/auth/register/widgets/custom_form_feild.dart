@@ -1,5 +1,5 @@
 import 'package:chat_app/constant/routes_app.dart';
-import 'package:chat_app/view/screen/auth/register/register_navigator.dart';
+import 'package:chat_app/constant/auth_navigator.dart';
 import 'package:chat_app/view/screen/auth/register/register_view_model.dart';
 import 'package:chat_app/view/widgets/custom_text_form.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class CustomFormField extends StatefulWidget {
 }
 
 class _CustomFormFieldState extends State<CustomFormField>
-    implements RegisterNavigator {
+    implements AuthNavigator {
   String firstName = '';
 
   String lastName = '';
@@ -176,7 +176,8 @@ class _CustomFormFieldState extends State<CustomFormField>
 
   void validateForm() async {
     if (formKey.currentState?.validate() == true) {
-      registerViewModel.registerFirebaseAuth(email, password);
+      registerViewModel.registerFirebaseAuth(
+          email, password, firstName, lastName, userName);
     }
   }
 
@@ -193,7 +194,12 @@ class _CustomFormFieldState extends State<CustomFormField>
   @override
   void showMessage(String message) {
     utils.showMessage(context, message, "Ok", (context) {
-      Navigator.of(context).pushReplacementNamed(RoutesApp.homeScreen);
+      Navigator.pop(context);
     });
+  }
+
+  @override
+  void navigateToHome() {
+    Navigator.of(context).pushReplacementNamed(RoutesApp.homeScreen);
   }
 }

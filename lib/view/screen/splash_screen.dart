@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:async';
 import 'package:chat_app/constant/images.dart';
 import 'package:chat_app/view/screen/home/home_screen.dart';
