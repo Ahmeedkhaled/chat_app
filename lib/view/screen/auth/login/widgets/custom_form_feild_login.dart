@@ -1,7 +1,6 @@
 import 'package:chat_app/constant/routes_app.dart';
 import 'package:chat_app/view/screen/auth/login/login_navigator.dart';
 import 'package:chat_app/view/screen/auth/login/login_view_model.dart';
-import 'package:chat_app/view/screen/auth/register/register_screen.dart';
 import 'package:chat_app/view/widgets/custom_text_form.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
