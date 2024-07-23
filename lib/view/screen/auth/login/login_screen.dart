@@ -1,9 +1,9 @@
 import 'package:chat_app/constant/images.dart';
-import 'package:chat_app/view/screen/auth/register/widgets/custom_register.dart';
+import 'package:chat_app/view/screen/auth/login/widgets/custom_login.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
           fit: BoxFit.fill,
           backgroundImage,
         ),
-        CustomRegister(title: "Home Screen"),
+        CustomLogin(title: "Login Screen"),
       ],
     );
   }

@@ -1,5 +1,6 @@
 import 'package:chat_app/constant/routes_app.dart';
 import 'package:chat_app/constant/theme_app.dart';
+import 'package:chat_app/view/screen/auth/login/login_screen.dart';
 import 'package:chat_app/view/screen/auth/register/register_screen.dart';
 import 'package:chat_app/view/screen/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,10 +28,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: RoutesApp.registerScreen,
+      initialRoute: RoutesApp.loginScreen,
       routes: {
         RoutesApp.registerScreen: (context) => const RegisterScreen(),
         RoutesApp.homeScreen: (context) => const HomeScreen(),
+        RoutesApp.loginScreen: (context) => const LoginScreen(),
       },
       theme: ThemeApp.themeApp,
     );

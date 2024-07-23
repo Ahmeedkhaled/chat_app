@@ -1,44 +1,40 @@
 import 'package:chat_app/constant/routes_app.dart';
-import 'package:chat_app/view/screen/auth/register/register_navigator.dart';
-import 'package:chat_app/view/screen/auth/register/register_view_model.dart';
+import 'package:chat_app/view/screen/auth/login/login_navigator.dart';
+import 'package:chat_app/view/screen/auth/login/login_view_model.dart';
+import 'package:chat_app/view/screen/auth/register/register_screen.dart';
 import 'package:chat_app/view/widgets/custom_text_form.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:chat_app/constant/utils.dart' as utils;
 
-class CustomFormField extends StatefulWidget {
-  const CustomFormField({super.key});
+class CustomFormFieldLogin extends StatefulWidget {
+  const CustomFormFieldLogin({super.key});
 
   @override
-  State<CustomFormField> createState() => _CustomFormFieldState();
+  State<CustomFormFieldLogin> createState() => _CustomFormFieldState();
 }
 
-class _CustomFormFieldState extends State<CustomFormField>
-    implements RegisterNavigator {
-  String firstName = '';
-
-  String lastName = '';
+class _CustomFormFieldState extends State<CustomFormFieldLogin>
+    implements LoginNavigator {
   String email = '';
 
   String password = '';
 
-  String userName = '';
-
   bool isObscure = true;
   var formKey = GlobalKey<FormState>();
 
-  RegisterViewModel registerViewModel = RegisterViewModel();
+  LoginViewModel loginViewModel = LoginViewModel();
 
   @override
   void initState() {
     super.initState();
-    registerViewModel.navigator = this;
+    loginViewModel.navigator = this;
   }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => registerViewModel,
+      create: (context) => loginViewModel,
       child: Padding(
         padding:
             EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.06),
@@ -52,54 +48,6 @@ class _CustomFormFieldState extends State<CustomFormField>
                 children: [
                   const SizedBox(
                     height: 15,
-                  ),
-                  CustomTextForm(
-                    onChanged: (text) {
-                      firstName = text;
-                    },
-                    labelText: "First Name",
-                    hintText: "Enter your First Name",
-                    validator: (text) {
-                      if (text == null || text.trim().isEmpty) {
-                        return "Please Enter Your First Name";
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
-                  ),
-                  CustomTextForm(
-                    onChanged: (text) {
-                      lastName = text;
-                    },
-                    labelText: "Last Name",
-                    hintText: "Enter your Last Name",
-                    validator: (text) {
-                      if (text == null || text.trim().isEmpty) {
-                        return "Please Enter Your Last Name";
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
-                  ),
-                  CustomTextForm(
-                    onChanged: (text) {
-                      userName = text;
-                    },
-                    labelText: "User Name",
-                    hintText: "Enter your User Name",
-                    validator: (text) {
-                      if (text == null || text.trim().isEmpty) {
-                        return "Please Enter Your User Name";
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
                   ),
                   CustomTextForm(
                       onChanged: (text) {
@@ -160,13 +108,28 @@ class _CustomFormFieldState extends State<CustomFormField>
                           validateForm();
                         },
                         child: Text(
-                          "Create Account",
+                          "Login",
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!
                               .copyWith(fontSize: 18),
                         )),
-                  )
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushNamed(RoutesApp.registerScreen);
+                      },
+                      child: const Text(
+                        "Don't have an account?",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.blue,
+                        ),
+                      ))
                 ],
               ),
             )),
@@ -176,7 +139,7 @@ class _CustomFormFieldState extends State<CustomFormField>
 
   void validateForm() async {
     if (formKey.currentState?.validate() == true) {
-      registerViewModel.registerFirebaseAuth(email, password);
+      loginViewModel.loginFirebaseAuth(email, password);
     }
   }
 
