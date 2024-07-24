@@ -1,5 +1,5 @@
 import 'package:chat_app/constant/images.dart';
-import 'package:chat_app/view/screen/home/widgets/custom_home_page.dart';
+import 'package:chat_app/view/screen/add_room/widgets/custom_add_room.dart';
 import 'package:flutter/material.dart';
 
 class AddRoom extends StatefulWidget {
@@ -22,7 +22,7 @@ class _AddRoomState extends State<AddRoom> {
           fit: BoxFit.fill,
           backgroundImage,
         ),
-        const CustomHomePage(title: "       Home Screen"),
+        const CustomAddRoom(title: "Add Room"),
       ],
     );
   }

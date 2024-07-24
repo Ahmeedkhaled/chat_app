@@ -4,6 +4,7 @@ class CustomTextForm extends StatelessWidget {
   // final String? fieldName;
   final String? hintText;
   final String? labelText;
+  int? maxLines;
 
   final Widget? suffixIcon;
   final bool? isObscure;
@@ -11,8 +12,9 @@ class CustomTextForm extends StatelessWidget {
   // final TextEditingController controller;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
-  const CustomTextForm(
+  CustomTextForm(
       {super.key,
+      this.maxLines = 1,
       // required this.fieldName,
       // required this.controller,
       required this.onChanged,
@@ -40,6 +42,7 @@ class CustomTextForm extends StatelessWidget {
           //   height: 15,
           // ),
           TextFormField(
+            maxLines: maxLines,
             onChanged: onChanged,
             validator: validator,
             // controller: controller,

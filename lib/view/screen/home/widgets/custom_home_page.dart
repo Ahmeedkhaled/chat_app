@@ -1,5 +1,4 @@
 import 'package:chat_app/constant/routes_app.dart';
-import 'package:chat_app/view/screen/auth/register/widgets/custom_form_feild.dart';
 import 'package:chat_app/view/screen/home/widgets/floating_action_button.dart';
 import 'package:chat_app/view/screen/home/widgets/item_home.dart';
 import 'package:flutter/material.dart';
