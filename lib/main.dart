@@ -1,11 +1,14 @@
 import 'package:chat_app/constant/routes_app.dart';
 import 'package:chat_app/constant/theme_app.dart';
+import 'package:chat_app/provider/user_provider.dart';
+import 'package:chat_app/view/screen/add_room/add_room.dart';
 import 'package:chat_app/view/screen/auth/login/login_screen.dart';
 import 'package:chat_app/view/screen/auth/register/register_screen.dart';
 import 'package:chat_app/view/screen/home/home_screen.dart';
 import 'package:chat_app/view/screen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +22,10 @@ void main() async {
     ),
   );
 
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => UserProvider(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -29,12 +35,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: RoutesApp.loginScreen,
+      initialRoute: RoutesApp.splashScreen,
       routes: {
         RoutesApp.registerScreen: (context) => const RegisterScreen(),
         RoutesApp.homeScreen: (context) => const HomeScreen(),
         RoutesApp.loginScreen: (context) => const LoginScreen(),
         RoutesApp.splashScreen: (context) => const SplashScreen(),
+        RoutesApp.addRoom: (context) => const AddRoom(),
       },
       theme: ThemeApp.themeApp,
     );

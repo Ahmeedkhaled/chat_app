@@ -3,4 +3,5 @@ class RoutesApp {
   static const String registerScreen = 'register_screen';
   static const String loginScreen = 'login_screen';
   static const String splashScreen = 'splash_screen';
+  static const String addRoom = 'add_room';
 }

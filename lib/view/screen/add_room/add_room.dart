@@ -2,9 +2,14 @@ import 'package:chat_app/constant/images.dart';
 import 'package:chat_app/view/screen/home/widgets/custom_home_page.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class AddRoom extends StatefulWidget {
+  const AddRoom({super.key});
 
+  @override
+  State<AddRoom> createState() => _AddRoomState();
+}
+
+class _AddRoomState extends State<AddRoom> {
   @override
   Widget build(BuildContext context) {
     return Stack(

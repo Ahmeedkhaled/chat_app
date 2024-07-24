@@ -1,5 +1,5 @@
-import 'package:chat_app/constant/firebase_error.dart';
 import 'package:chat_app/constant/auth_navigator.dart';
+import 'package:chat_app/constant/firebase_error.dart';
 import 'package:chat_app/data/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +21,7 @@ class LoginViewModel extends ChangeNotifier {
       } else {
         navigator.hideLoading();
         navigator.showMessage("Login Successfully");
-
-        navigator.navigateToHome();
+        navigator.navigateToHome(userObj);
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == FirebaseError.usernotfound) {

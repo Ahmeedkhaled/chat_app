@@ -1,5 +1,5 @@
-import 'package:chat_app/constant/firebase_error.dart';
 import 'package:chat_app/constant/auth_navigator.dart';
+import 'package:chat_app/constant/firebase_error.dart';
 import 'package:chat_app/data/database.dart';
 import 'package:chat_app/model/my_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,7 +27,7 @@ class RegisterViewModel extends ChangeNotifier {
 
       navigator.hideLoading();
       navigator.showMessage("Register Successfully");
-      navigator.navigateToHome();
+      navigator.navigateToHome(user);
     } on FirebaseAuthException catch (e) {
       if (e.code == FirebaseError.weakPassword) {
         navigator.hideLoading();

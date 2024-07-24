@@ -1,5 +1,7 @@
-import 'package:chat_app/constant/routes_app.dart';
 import 'package:chat_app/constant/auth_navigator.dart';
+import 'package:chat_app/constant/routes_app.dart';
+import 'package:chat_app/model/my_user.dart';
+import 'package:chat_app/provider/user_provider.dart';
 import 'package:chat_app/view/screen/auth/register/register_view_model.dart';
 import 'package:chat_app/view/widgets/custom_text_form.dart';
 import 'package:flutter/material.dart';
@@ -199,7 +201,9 @@ class _CustomFormFieldState extends State<CustomFormField>
   }
 
   @override
-  void navigateToHome() {
+  void navigateToHome(MyUser user) {
+    var userProvider = Provider.of<UserProvider>(context, listen: false);
+    userProvider.user = user;
     Navigator.of(context).pushReplacementNamed(RoutesApp.homeScreen);
   }
 }
