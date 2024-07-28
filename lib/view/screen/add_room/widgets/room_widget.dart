@@ -1,3 +1,4 @@
+import 'package:chat_app/constant/routes_app.dart';
 import 'package:chat_app/model/room.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,9 @@ class RoomWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushNamed(RoutesApp.chatRoom, arguments: room);
+      },
       child: Container(
         margin: EdgeInsets.symmetric(
           horizontal: MediaQuery.of(context).size.width * 0.03,

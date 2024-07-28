@@ -1,6 +1,7 @@
 import 'package:chat_app/constant/routes_app.dart';
 import 'package:chat_app/constant/theme_app.dart';
 import 'package:chat_app/provider/user_provider.dart';
+import 'package:chat_app/view/chat/chat_screen.dart';
 import 'package:chat_app/view/screen/add_room/add_room.dart';
 import 'package:chat_app/view/screen/auth/login/login_screen.dart';
 import 'package:chat_app/view/screen/auth/register/register_screen.dart';
@@ -35,13 +36,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: RoutesApp.addRoom,
+      initialRoute: RoutesApp.homeScreen,
       routes: {
         RoutesApp.registerScreen: (context) => const RegisterScreen(),
         RoutesApp.homeScreen: (context) => const HomeScreen(),
         RoutesApp.loginScreen: (context) => const LoginScreen(),
         RoutesApp.splashScreen: (context) => const SplashScreen(),
         RoutesApp.addRoom: (context) => const AddRoom(),
+        RoutesApp.chatRoom: (context) => const ChatScreen(),
       },
       theme: ThemeApp.themeApp,
     );
