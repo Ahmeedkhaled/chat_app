@@ -1,9 +1,13 @@
+import 'package:chat_app/model/message.dart';
 import 'package:chat_app/model/room.dart';
+import 'package:chat_app/provider/user_provider.dart';
 import 'package:chat_app/view/chat/chat_navigator.dart';
 import 'package:chat_app/view/chat/chat_view_model.dart';
+import 'package:chat_app/view/chat/widget/message_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:chat_app/constant/utils.dart' as utils;
 
 class ChatForJoinGroup extends StatefulWidget {
   const ChatForJoinGroup({super.key});
@@ -15,6 +19,8 @@ class ChatForJoinGroup extends StatefulWidget {
 class _ChatForJoinGroupState extends State<ChatForJoinGroup>
     implements ChatNavigator {
   ChatViewModel chatViewModel = ChatViewModel();
+  String messageText = '';
+  TextEditingController controller = TextEditingController();
 
   @override
   void initState() {
@@ -25,6 +31,10 @@ class _ChatForJoinGroupState extends State<ChatForJoinGroup>
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments as Room;
+    var provider = Provider.of<UserProvider>(context);
+    chatViewModel.room = args;
+    chatViewModel.currentUser = provider.user!;
+    chatViewModel.listenForUpdateMessage();
     return ChangeNotifierProvider(
       create: (context) => chatViewModel,
       child: Container(
@@ -49,18 +59,50 @@ class _ChatForJoinGroupState extends State<ChatForJoinGroup>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              child: Container(
-                  // هنا يمكنك إضافة محتوى الشات أو الرسائل
-                  ),
-            ),
+                child: StreamBuilder<QuerySnapshot<Message>>(
+                    stream: chatViewModel.streamMessage,
+                    builder: (context, asyncSnapshot) {
+                      if (asyncSnapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.blue,
+                          ),
+                        );
+                      } else if (asyncSnapshot.hasError) {
+                        return Text(
+                          asyncSnapshot.error.toString(),
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 20),
+                        );
+                      } else {
+                        var messageList = asyncSnapshot.data?.docs
+                                .map((doc) => doc.data())
+                                .toList() ??
+                            [];
+
+                        return ListView.builder(
+                            itemCount: messageList.length,
+                            itemBuilder: (context, index) {
+                              return MessageWidget(message: messageList[index]);
+                            });
+                      }
+                    })),
             Row(
               children: [
                 Expanded(
                   flex: 4,
                   child: TextField(
+                    controller: controller,
+                    onChanged: (text) {
+                      messageText = text;
+                    },
                     decoration: InputDecoration(
                       hintText: "Type a message",
                       focusColor: Colors.blue,
+                      hoverColor: Colors.blue,
+                      fillColor: Colors.blue,
+
                       hintStyle: const TextStyle(fontSize: 16),
                       border: const OutlineInputBorder(
                           borderRadius:
@@ -78,26 +120,41 @@ class _ChatForJoinGroupState extends State<ChatForJoinGroup>
                 Expanded(
                   flex: 1,
                   child: SizedBox(
-                    width: 50, // Adjust the size as needed
-                    height: 50, // Adjust the size as needed
+                    width: 45,
+                    height: 45,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           shape: const CircleBorder(),
-                          backgroundColor: Colors.blue),
-                      onPressed: () {},
+                          backgroundColor:
+                              const Color.fromARGB(255, 118, 182, 227)),
+                      onPressed: () {
+                        chatViewModel.sendMessage(messageText);
+                      },
                       child: const Icon(
                         Icons.send_outlined,
                         color: Colors.black,
+                        size: 20,
                       ),
                     ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 8), // لإضافة مسافة صغيرة تحت العناصر
+            const SizedBox(height: 8),
           ],
         ),
       ),
     );
   }
+
+  @override
+  void clearMessage() {
+    print("Clear Message");
+    controller.clear();
+  }
+
+  // @override
+  // showMessage(String message) {
+  //   utils.showMessage(context, message, posActionText, posAction)
+  // }
 }

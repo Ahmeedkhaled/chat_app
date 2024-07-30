@@ -17,7 +17,7 @@ class RoomWidget extends StatelessWidget {
           horizontal: MediaQuery.of(context).size.width * 0.03,
           vertical: MediaQuery.of(context).size.height * 0.01,
         ),
-        padding: const EdgeInsets.all(15),
+        height: MediaQuery.of(context).size.height * 5,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
@@ -47,7 +47,7 @@ class RoomWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
           ],
         ),
       ),

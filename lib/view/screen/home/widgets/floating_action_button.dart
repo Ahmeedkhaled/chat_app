@@ -7,10 +7,14 @@ class CustomFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      backgroundColor: Colors.blue,
       onPressed: () {
         Navigator.of(context).pushNamed(RoutesApp.addRoom);
       },
-      child: const Icon(Icons.add),
+      child: const Icon(
+        Icons.add,
+        size: 30,
+      ),
     );
   }
 }

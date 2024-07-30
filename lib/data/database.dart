@@ -1,3 +1,4 @@
+import 'package:chat_app/model/message.dart';
 import 'package:chat_app/model/my_user.dart';
 import 'package:chat_app/model/room.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,6 +23,18 @@ class Database {
         );
   }
 
+  static CollectionReference<Message> getMessageCollection(String roomId) {
+    print("Getting message collection for room ID: $roomId");
+    return FirebaseFirestore.instance
+        .collection(Room.collectionName)
+        .doc(roomId)
+        .collection(Message.collectionName)
+        .withConverter<Message>(
+            fromFirestore: (snapshot, optians) =>
+                Message.fromJson(snapshot.data()!),
+            toFirestore: (message, optians) => message.toJson());
+  }
+
   static Future<void> registerUser(MyUser user) async {
     return getUserCollection().doc(user.id).set(user);
   }
@@ -39,5 +52,17 @@ class Database {
 
   static Stream<QuerySnapshot<Room>> getRooms() {
     return getRoomCollection().snapshots();
+  }
+
+  static Future<void> insertMessage(Message message) async {
+    var messageCollection = getMessageCollection(message.roomId);
+    var docRef = messageCollection.doc();
+    message.id = docRef.id;
+    return docRef.set(message);
+  }
+
+  static Stream<QuerySnapshot<Message>> getMessagesFromFirestore(
+      String roomId) {
+    return getMessageCollection(roomId).orderBy("dateTime").snapshots();
   }
 }
