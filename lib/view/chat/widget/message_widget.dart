@@ -77,7 +77,7 @@ class RecieveMessage extends StatelessWidget {
       children: [
         Text(
           formatTime(message.dateTime),
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.black),
         ),
         Container(
           padding: EdgeInsets.symmetric(
