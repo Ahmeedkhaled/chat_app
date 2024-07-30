@@ -99,9 +99,11 @@ class _ChatForJoinGroupState extends State<ChatForJoinGroup>
                     },
                     decoration: InputDecoration(
                       hintText: "Type a message",
-                      focusColor: Colors.blue,
-                      hoverColor: Colors.blue,
-                      fillColor: Colors.blue,
+                      focusedBorder: const OutlineInputBorder(
+                        borderRadius:
+                            BorderRadius.only(topRight: Radius.circular(25)),
+                        borderSide: BorderSide(color: Colors.blue),
+                      ),
 
                       hintStyle: const TextStyle(fontSize: 16),
                       border: const OutlineInputBorder(
