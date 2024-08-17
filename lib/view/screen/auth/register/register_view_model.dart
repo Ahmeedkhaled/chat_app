@@ -23,7 +23,7 @@ class RegisterViewModel extends ChangeNotifier {
           userName: userName,
           email: email);
 
-      var dataUser = await Database.registerUser(user);
+      await Database.registerUser(user);
 
       navigator.hideLoading();
       navigator.showMessage("Register Successfully");

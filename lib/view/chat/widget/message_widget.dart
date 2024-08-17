@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class MessageWidget extends StatelessWidget {
   Message message;
   MessageWidget({super.key, required this.message});
@@ -21,12 +22,6 @@ class SentMessage extends StatelessWidget {
   Message message;
 
   SentMessage({super.key, required this.message});
-  String formatTime(int time) {
-    int hour = time ~/ 100;
-    int minute = time % 100;
-    DateTime dateTime = DateTime(0, 1, 1, hour, minute);
-    return DateFormat.Hm().format(dateTime);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +46,6 @@ class SentMessage extends StatelessWidget {
             style: const TextStyle(color: Colors.white, fontSize: 16),
           ),
         ),
-        Text(
-          formatTime(message.dateTime),
-          style: const TextStyle(color: Colors.black),
-        ),
       ],
     );
   }
@@ -63,22 +54,12 @@ class SentMessage extends StatelessWidget {
 class RecieveMessage extends StatelessWidget {
   Message message;
   RecieveMessage({super.key, required this.message});
-  String formatTime(int time) {
-    int hour = time ~/ 100;
-    int minute = time % 100;
-    DateTime dateTime = DateTime(0, 1, 1, hour, minute);
-    return DateFormat.Hm().format(dateTime);
-  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          formatTime(message.dateTime),
-          style: const TextStyle(color: Colors.black),
-        ),
         Container(
           padding: EdgeInsets.symmetric(
               horizontal: MediaQuery.of(context).size.width * 0.06,

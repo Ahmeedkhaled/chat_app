@@ -7,7 +7,6 @@ import 'package:chat_app/view/chat/widget/message_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:chat_app/constant/utils.dart' as utils;
 
 class ChatForJoinGroup extends StatefulWidget {
   const ChatForJoinGroup({super.key});
@@ -151,7 +150,6 @@ class _ChatForJoinGroupState extends State<ChatForJoinGroup>
 
   @override
   void clearMessage() {
-    print("Clear Message");
     controller.clear();
   }
 

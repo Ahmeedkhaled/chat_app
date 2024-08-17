@@ -16,7 +16,7 @@ class AddRoomViewModel extends ChangeNotifier {
 
     try {
       navigator.showLoading();
-      var createdRoom = await Database.addRoomToFirestoreroom(room);
+      await Database.addRoomToFirestoreroom(room);
       navigator.hideLoading();
       navigator.showMessage("Room Was Added Successfully");
     } catch (e) {

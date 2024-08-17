@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:chat_app/constant/images.dart';
 import 'package:chat_app/constant/routes_app.dart';
 import 'package:chat_app/model/category.dart';

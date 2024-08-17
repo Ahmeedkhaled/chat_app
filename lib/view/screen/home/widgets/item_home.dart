@@ -16,6 +16,7 @@ class ItemHome extends StatefulWidget {
 
 class _ItemHomeState extends State<ItemHome> implements HomeNavigator {
   HomeViewModel homeViewModel = HomeViewModel();
+
   @override
   void initState() {
     super.initState();
@@ -27,36 +28,70 @@ class _ItemHomeState extends State<ItemHome> implements HomeNavigator {
     return ChangeNotifierProvider(
       create: (context) => homeViewModel,
       child: StreamBuilder<QuerySnapshot<Room>>(
-          stream: Database.getRooms(),
-          builder: (context, asyncSnapshot) {
-            if (asyncSnapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.blue,
-                ),
-              );
-            } else if (asyncSnapshot.hasError) {
-              return Text(asyncSnapshot.error.toString());
-            } else {
-              var roomList =
-                  asyncSnapshot.data?.docs.map((doc) => doc.data()).toList();
+        stream: Database.getRooms(),
+        builder: (context, asyncSnapshot) {
+          if (asyncSnapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.blue,
+              ),
+            );
+          } else if (asyncSnapshot.hasError) {
+            return Text(asyncSnapshot.error.toString());
+          } else {
+            var roomList =
+                asyncSnapshot.data?.docs.map((doc) => doc.data()).toList();
 
-              return GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 8,
-                  mainAxisSpacing: 8,
-                  childAspectRatio: 1,
-                ),
-                itemBuilder: (context, index) {
-                  return RoomWidget(room: roomList[index]);
-                },
-                itemCount: roomList!.length,
-              );
-            }
-          }),
+            return GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+                childAspectRatio: 1,
+              ),
+              itemBuilder: (context, index) {
+                Room room = roomList![index];
+                return GestureDetector(
+                  onLongPress: () {
+                    _showDeleteDialog(context, room.roomId);
+                  },
+                  child: RoomWidget(room: room),
+                );
+              },
+              itemCount: roomList!.length,
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  void _showDeleteDialog(BuildContext context, String roomId) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Delete Room'),
+          content: const Text('Are you sure you want to delete this room?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                homeViewModel.deleteRoom(roomId);
+                Navigator.pop(context); // Close the dialog
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

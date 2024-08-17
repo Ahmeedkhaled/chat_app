@@ -24,7 +24,6 @@ class Database {
   }
 
   static CollectionReference<Message> getMessageCollection(String roomId) {
-    print("Getting message collection for room ID: $roomId");
     return FirebaseFirestore.instance
         .collection(Room.collectionName)
         .doc(roomId)
@@ -48,6 +47,14 @@ class Database {
     var docRef = getRoomCollection().doc();
     room.roomId = docRef.id;
     return docRef.set(room);
+  }
+
+  static Future<void> deleteRoom(String roomId) async {
+    return getRoomCollection().doc(roomId).delete().then((value) {
+      print("Room Deleted");
+    }).catchError((error) {
+      print("Failed to delete room: $error");
+    });
   }
 
   static Stream<QuerySnapshot<Room>> getRooms() {

@@ -8,4 +8,8 @@ class HomeViewModel extends ChangeNotifier {
   void getRoomFromFirestore() {
     Database.getRooms();
   }
+
+  void deleteRoom(String roomId) {
+    Database.deleteRoom(roomId);
+  }
 }

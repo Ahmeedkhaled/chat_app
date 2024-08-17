@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomTextForm extends StatelessWidget {
   // final String? fieldName;
   final String? hintText;
